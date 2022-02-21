@@ -1,0 +1,19 @@
+;
+; BIND reverse data file for empty rfc1918 zone
+;
+$TTL	604800
+@	IN	SOA	localhost. root.localhost. (
+			      5		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	localhost.
+;
+@	IN	A	xx.xx.xx.xx
+;
+ns	IN	A	xx.xx.xx.xx
+www	IN	A	xx.xx.xx.xx
+us	IN	A	xx.xx.xx.xx
+mail	IN	A	xx.xx.xx.xx
