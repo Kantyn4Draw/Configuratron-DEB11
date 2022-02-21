@@ -18,7 +18,10 @@ Configuratron DEB11" is a script based on phyton, it can basically configure you
 - have all file .txt on the same folder as the script .py
 ## who executed?
 
--python3.9 configuratron.py
+- sudo apt-get install git-all
+- sudo apt-get install python3.9
+- git clone https://github.com/Kantyn4Draw/Configuratron-DEB11.git
+- python3.9 configuratron-DEB11/configuratron.py
 ## What it does
 - Change hostname
 - Configure multiple interface
