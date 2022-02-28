@@ -43,64 +43,108 @@ def newInterface():
 		print("")
 		print(backRed+ "interface name?"+clear)
 		interfaceName = input()
-		print(backRed+"server IP?"+clear)
-		ipAddress = input()
-		if ipaddress.ip_address(ipAddress): # test if ip address is good
-			print(blue+"Ip OK"+clear)
+		print(blink+backBlue+"this interface is parameter in DHCP? [N/Y]"+clear) 
+		var = input()
+		if (var == 'y' or var == 'Y' or var == 'YES' or var == 'yes'):
+			
+			with open('/etc/network/interfaces', 'r') as file: # open the file interfaces.txt to read data
+				data = file.readlines() # insert a list of lines into data
+			data[fileLine] = 'auto ' + interfaceName + '\n'# whrite data on the file
+			fileLine = fileLine + 1
+			data[fileLine] = 'allow-hotplug ' + interfaceName + '\n'
+			fileLine = fileLine + 1
+			data[fileLine] = 'iface ' + interfaceName + ' inet dhcp\n'
+			fileLine = fileLine + 2
+			
+			with open('temp.txt', 'w') as file: #create a temporary file because /etc/network/interfaces is protected
+				file.writelines( data )
+			os.system('sudo mv temp.txt /etc/network/interfaces') # use sudo command to overwrite protected files
+
+		else:
+			print(backRed+"server IP?"+clear)
+			ipAddress = input()
+			if ipaddress.ip_address(ipAddress): # test if ip address is good
+				print(blue+"IP Valide"+clear)
 		
-		print(backRed+"Netmask?"+clear)
-		netmask = input()
-		if ipaddress.ip_address(netmask): # test if Netmask is good
-			print(blue+"Netmask OK"+clear)
-		print(backRed+"Gateway?"+clear)
-		gateway = input()
-		if ipaddress.ip_address(gateway): # test if gateway is good
-			print(backRed+"gateway OK"+clear)
-		with open('/etc/network/interfaces', 'r') as file: # open the file interfaces.txt to read data
-			data = file.readlines() # insert a list of lines into data
-		data[fileLine] = 'auto ' + interfaceName + '\n'# whrite data on the file
-		fileLine = fileLine + 1
-		data[fileLine] = 'iface ' + interfaceName + ' inet static\n'
-		fileLine = fileLine + 1
-		data[fileLine] = 'address ' + ipAddress + '\n'
-		fileLine = fileLine + 1
-		data[fileLine] = 'netmask ' + netmask + '\n'
-		fileLine = fileLine + 1
-		data[fileLine] = 'gateway ' + gateway + '\n'
-		fileLine = fileLine + 2
-		with open('temp.txt', 'w') as file: #create a temporary file because /etc/network/interfaces is protected
-			file.writelines( data )
-		os.system('sudo mv temp.txt /etc/network/interfaces') # use sudo command to overwrite protected files
-	
-		print(fileLine)
+			print(backRed+"Netmask?"+clear)
+			netmask = input()
+			if ipaddress.ip_address(netmask): # test if Netmask is good
+				print(blue+"IP Valide"+clear)
+			print(blink+backBlue+"this interface has Gateway ? [N/Y]"+clear) 
+			var = input()
+			if (var == 'y' or var == 'Y' or var == 'YES' or var == 'yes'):
+				print(backRed+"Gateway?"+clear)
+				gateway = input()
+				if ipaddress.ip_address(gateway): # test if gateway is good
+					print(blue+"IP Valide"+clear)
+				with open('/etc/network/interfaces', 'r') as file: # open the file interfaces.txt to read data
+					data = file.readlines() # insert a list of lines into data
+				data[fileLine] = 'auto ' + interfaceName + '\n'# whrite data on the file
+				fileLine = fileLine + 1
+				data[fileLine] = 'iface ' + interfaceName + ' inet static\n'
+				fileLine = fileLine + 1
+				data[fileLine] = 'address ' + ipAddress + '\n'
+				fileLine = fileLine + 1
+				data[fileLine] = 'netmask ' + netmask + '\n'
+				fileLine = fileLine + 1
+				data[fileLine] = 'gateway ' + gateway + '\n'
+				fileLine = fileLine + 2
+				with open('temp.txt', 'w') as file: #create a temporary file because /etc/network/interfaces is protected
+					file.writelines( data )
+				os.system('sudo mv temp.txt /etc/network/interfaces') # use sudo command to overwrite protected files
+			else:
+				with open('/etc/network/interfaces', 'r') as file: # open the file interfaces.txt to read data
+					data = file.readlines() # insert a list of lines into data
+				data[fileLine] = 'auto ' + interfaceName + '\n'# whrite data on the file
+				fileLine = fileLine + 1
+				data[fileLine] = 'iface ' + interfaceName + ' inet static\n'
+				fileLine = fileLine + 1
+				data[fileLine] = 'address ' + ipAddress + '\n'
+				fileLine = fileLine + 1
+				data[fileLine] = 'netmask ' + netmask + '\n'
+				fileLine = fileLine + 2
+				with open('temp.txt', 'w') as file: #create a temporary file because /etc/network/interfaces is protected
+					file.writelines( data )
+				os.system('sudo mv temp.txt /etc/network/interfaces') # use sudo command to overwrite protected files
 		print(blink+backBlue+"configure an new interface? [N/Y]"+clear) 
 		var = input()
 ############### DHCP ###############
 def setDhcp():
 	os.system('sudo apt-get install isc-dhcp-server -y')
-	print(backRed+"domain Name?"+clear)
-	domainName = input()
-	print(backRed+"DNS server Ip 1 ??"+clear)
+	print(backRed+"DNS server Ip 1 for DHCP??"+clear)
 	dnsServer1 = input()
-	print(backRed+"DNS server Ip 2 ??"+clear)
+	if ipaddress.ip_address(dnsServer1):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"DNS server Ip 2 for DHCP??"+clear)
 	dnsServer2 = input()
-	print(backRed+"Subnet ??"+clear)
+	if ipaddress.ip_address(dnsServer2):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"Subnet for DHCP??"+clear)
 	subnet = input()
-	print(backRed+"Netmask ??"+clear)
+	if ipaddress.ip_address(subnet):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"Netmask for DHCP??"+clear)
 	netmask = input()
-	print(backRed+"Lower range ??"+clear)
+	if ipaddress.ip_address(netmask):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"Lower range for DHCP??"+clear)
 	lowRange = input()
-	print(backRed+"Upper range ??"+clear)
+	if ipaddress.ip_address(lowRange):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"Upper range for DHCP??"+clear)
 	upRange = input()
-	print(backRed+"options routers ??"+clear)
+	if ipaddress.ip_address(upRange):
+		print(blue+"IP Valide"+clear)
+	print(backRed+"options routers for DHCP??"+clear)
 	routers = input()
+	if ipaddress.ip_address(routers):
+		print(blue+"IP Valide"+clear)
 	with open('dhcp.txt', 'r') as file: # open the file interfaces.txt to read data
 		data = file.readlines() # insert a list of lines into data
-	data[6] = 'option domain-name "' + domainName + '";\n'
 	data[7] = 'option domain-name-servers ' + dnsServer1 + ', ' + dnsServer2 + ';\n'
 	data[9] = 'subnet ' + subnet + ' netmask ' + netmask + ' {\n'
 	data[10] = 'range ' + lowRange + ' ' + upRange + ';\n'
-	data[11] = 'options routers ' + routers + ';\n'
+	data[11] = 'option routers ' + routers + ';\n'
 	data[12] = '}\n'
 	with open('temp.txt', 'w') as file: #create a temporary file because /etc/network/interfaces is protected
 		file.writelines( data )
@@ -130,7 +174,6 @@ def setDns():
 	data[13] = '@	IN	A	'+ serverIp + '\n'
 	data[15] = 'ns	IN	A	'+ serverIp + '\n'
 	data[16] = 'www	IN	A	'+ serverIp + '\n'
-	data[17] = 'us	IN	A	'+ serverIp + '\n'
 	data[18] = 'mail	IN	A	'+ serverIp + '\n'
 	with open('temp.txt', 'w') as file:
 		file.writelines( data )
@@ -148,7 +191,8 @@ print("")
 newInterface()
 setDhcp()
 setDns()
+print(blink+blue+"Do you want to reboot? [N/Y]"+clear) 
+var = input()
+if (var == 'y' or var == 'Y' or var == 'YES' or var == 'yes'):
+	os.system('systemctl reboot')
 print(blink + blue +"Thanks for use my script !! bye"+clear)
-
-
-
