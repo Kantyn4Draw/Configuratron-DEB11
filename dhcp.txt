@@ -4,7 +4,7 @@
 #
 
 # option definitions common to all supported networks...
-option domain-name "example.org";
+#option domain-name "example.org";
 option domain-name-servers ns1.example.org, ns2.example.org;
 #
 #
