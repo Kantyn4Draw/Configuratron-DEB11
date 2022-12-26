@@ -18,8 +18,8 @@ Configuratron DEB11" is a script based on phyton, it can basically configure you
 - have all file .txt on the same folder as the script .py
 ## who executed?
 
-- sudo apt-get install git-all
-- sudo apt-get install python3.9
+- sudo apt-get install git-all python3.9 sudo network-manager
+- cd ..
 - git clone https://github.com/Kantyn4Draw/Configuratron-DEB11.git
 - python3.9 configuratron-DEB11/configuratron.py
 ## What it does
