@@ -34,7 +34,7 @@ def newHostname(newHostname):
 ############### Interface ###############
 def newInterface():
 	fileLine = 11 # set the first lines we write on the files
-	os.system('sudo cp interfaces.txt /etc/network/interfaces')
+	os.system('sudo cp /Configuratron-DEB11/interfaces.txt /etc/network/interfaces')
 	print(blink+backBlue+"configure an new interface? [N/Y]"+clear) 
 	var = input()
 	while (var == 'y' or var == 'Y' or var == 'YES' or var == 'yes'):
@@ -139,7 +139,7 @@ def setDhcp():
 	routers = input()
 	if ipaddress.ip_address(routers):
 		print(blue+"IP Valide"+clear)
-	with open('dhcp.txt', 'r') as file: # open the file interfaces.txt to read data
+	with open('/Configuratron-DEB11/dhcp.txt', 'r') as file: # open the file interfaces.txt to read data
 		data = file.readlines() # insert a list of lines into data
 	data[7] = 'option domain-name-servers ' + dnsServer1 + ', ' + dnsServer2 + ';\n'
 	data[9] = 'subnet ' + subnet + ' netmask ' + netmask + ' {\n'
@@ -156,7 +156,7 @@ def setDns():
 	os.system('sudo mv namedConfOptions.txt /etc/bind/named.conf.options') #copy named conf options for the listen-on {"any"}
 	print(backRed+"Zone Name?"+clear)
 	zoneName = input()
-	with open('namedConfLocal.txt', 'r') as file:
+	with open('/Configuratron-DEB11/namedConfLocal.txt', 'r') as file:
 		data = file.readlines()
 	data[10] = 'zone "' + zoneName + '" {\n'
 	data[11] = 'type master;\n'
@@ -167,7 +167,7 @@ def setDns():
 	os.system('sudo mv temp.txt /etc/bind/named.conf.local')
 	print(backRed+"Serveur ip?"+clear)
 	serverIp = input()
-	with open('db.txt', 'r') as file:
+	with open('/Configuratron-DEB11/db.txt', 'r') as file:
 		data = file.readlines()
 	data[4] = '@	IN	SOA	'+ zoneName +'. root.'+ zoneName +'. (\n' 
 	data[11] = '@	IN	NS	'+ zoneName +'.\n'
